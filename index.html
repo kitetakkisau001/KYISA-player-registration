@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KYISA 2025 Player Registration</title>
+    <title>KYISA 2025 U-23 Player Registration</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,6 +14,20 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column;
+        }
+        #preloader {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: #4b8b3b;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            text-transform: uppercase;
+            z-index: 1000;
         }
         #registrationForm {
             background: #fff;
@@ -21,6 +35,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 300px;
+            margin-bottom: 20px;
         }
         h2 {
             text-align: center;
@@ -40,6 +55,9 @@
             border: 1px solid #bcd4b6;
             border-radius: 5px;
         }
+        select option:first-child {
+            display: none;
+        }
         button {
             background-color: #4b8b3b;
             color: white;
@@ -58,16 +76,32 @@
             color: #d9534f;
             font-weight: bold;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #4b8b3b;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #4b8b3b;
+            color: white;
+        }
     </style>
 </head>
 <body>
-    <h2>KYISA 2025 Player Registration</h2>
-    <div id="countdown"></div>
+    <div id="preloader">KITETA KISAU SPORTS U-23 ALL STAR TEAMS REGISTRATION PORTAL</div>
+    <h2>KYISA 2025 U-23 Player Registration</h2>
     <form id="registrationForm">
         <label>Name:</label>
         <input type="text" id="name" required><br><br>
 
-        <label>Club:</label>
+        <label>Club/Team:</label>
         <input type="text" id="club" required><br><br>
 
         <label>Date of Birth:</label>
@@ -76,8 +110,9 @@
         <label>Photo of ID (Upload URL):</label>
         <input type="url" id="id_photo" required><br><br>
 
-        <label>Category:</label>
+        <label>Category/Discipline:</label>
         <select id="category">
+            <option>Select Category/Discipline</option>
             <option value="Soccer Men">Soccer Men</option>
             <option value="Soccer Ladies">Soccer Ladies</option>
             <option value="Basketball Men">Basketball Men</option>
@@ -85,26 +120,63 @@
             <option value="Volleyball Ladies">Volleyball Ladies</option>
         </select><br><br>
 
+        <button type="button" id="addPlayerButton">Add Player</button>
         <button type="submit">Submit</button>
     </form>
 
+    <table id="playersTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Club/Team</th>
+                <th>Date of Birth</th>
+                <th>Category/Discipline</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Dynamic content will be added here -->
+        </tbody>
+    </table>
+
     <p id="responseMessage"></p>
+    <div id="countdown"></div>
 
     <script>
+        // Preloader
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('preloader').style.display = 'none';
+            }, 8000);
+        });
+
+        var players = [];
+
+        document.getElementById("addPlayerButton").addEventListener("click", function() {
+            var name = document.getElementById("name").value;
+            var club = document.getElementById("club").value;
+            var dob = document.getElementById("dob").value;
+            var id_photo = document.getElementById("id_photo").value;
+            var category = document.getElementById("category").value;
+
+            if (name && club && dob && id_photo && category) {
+                players.push({ name, club, dob, id_photo, category });
+                var table = document.getElementById("playersTable").getElementsByTagName('tbody')[0];
+                var newRow = table.insertRow();
+                newRow.innerHTML = `<td>${name}</td><td>${club}</td><td>${dob}</td><td>${category}</td>`;
+
+                // Clear form fields
+                document.getElementById("registrationForm").reset();
+            } else {
+                alert("Please fill all the fields before adding a player.");
+            }
+        });
+
         document.getElementById("registrationForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            var formData = {
-                name: document.getElementById("name").value,
-                club: document.getElementById("club").value,
-                dob: document.getElementById("dob").value,
-                id_photo: document.getElementById("id_photo").value,
-                category: document.getElementById("category").value
-            };
-
             fetch("YOUR_GOOGLE_APPS_SCRIPT_URL", {
                 method: "POST",
-                body: JSON.stringify(formData),
+                body: JSON.stringify(players),
                 headers: { "Content-Type": "application/json" }
             })
             .then(response => response.json())
