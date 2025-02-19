@@ -117,7 +117,6 @@
             <option value="Volleyball Ladies">Volleyball Ladies</option>
         </select><br><br>
 
-        <button type="button" id="addPlayerButton">Add Player</button>
         <button type="submit">Submit</button>
     </form>
 
@@ -146,9 +145,10 @@
             }, 8000);
         });
 
-        var players = [];
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault();
 
-        document.getElementById("addPlayerButton").addEventListener("click", function() {
+            var players = [];
             var name = document.getElementById("name").value;
             var club = document.getElementById("club").value;
             var dob = document.getElementById("dob").value;
@@ -169,12 +169,9 @@
                 // Clear form fields
                 document.getElementById("registrationForm").reset();
             } else {
-                alert("Please fill all the fields before adding a player.");
+                alert("Please fill all the fields before submitting the form.");
+                return;
             }
-        });
-
-        document.getElementById("registrationForm").addEventListener("submit", function(event) {
-            event.preventDefault();
 
             fetch("https://script.google.com/macros/s/AKfycbyzH781Jcx1Vy_rguqDuj46ZQlPaaapxOpyxGNKW3qbQWsfMMigGiuEfRyFdwua4zet5A/exec", {
                 method: "POST",
