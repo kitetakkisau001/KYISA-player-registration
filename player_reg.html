@@ -1,0 +1,47 @@
+<form id="playerForm">
+    <label for="category">Category:</label>
+    <select id="category" name="category" required>
+        <option value="Soccer Men">Soccer Men</option>
+        <option value="Soccer Ladies">Soccer Ladies</option>
+        <option value="Basketball Men">Basketball Men</option>
+        <option value="Volleyball Men">Volleyball Men</option>
+        <option value="Volleyball Ladies">Volleyball Ladies</option>
+    </select>
+
+    <label for="name">Name of Player:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="club">Club:</label>
+    <input type="text" id="club" name="club" required>
+
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob" required>
+
+    <label for="id_photo">Upload Photo of ID:</label>
+    <input type="file" id="id_photo" name="id_photo" accept="image/*" required>
+
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+document.getElementById("playerForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    var formData = new FormData(this);
+    var data = {
+        category: formData.get("category"),
+        name: formData.get("name"),
+        club: formData.get("club"),
+        dob: formData.get("dob"),
+        id_photo: "Uploaded Separately" // Image uploads require Google Drive API
+    };
+
+    fetch("YOUR_GOOGLE_APPS_SCRIPT_URL", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    }).then(response => alert("Submission Successful!"))
+      .catch(error => alert("Submission Failed!"));
+});
+</script>
