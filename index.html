@@ -243,16 +243,16 @@
                 newRow.innerHTML = `<td>${name}</td><td>${club}</td><td>${dob}</td><td>${category}</td>`;
 
                 // Clear form fields
-               document.getElementById("registrationForm").reset();
+                document.getElementById("registrationForm").reset();
+            } else {
+                alert("Please fill all the fields before submitting the form.");
+                return;
+            }
 
             fetch("https://script.google.com/macros/s/AKfycbyzH781Jcx1Vy_rguqDuj46ZQlPaaapxOpyxGNKW3qbQWsfMMigGiuEfRyFdwua4zet5A/exec", {
                 method: "POST",
-                body: new URLSearchParams({
-                    "CATEGORY/DISCIPLINE": category,
-                    "PLAYER NAME": name,
-                    "CLUB/TEAM": club,
-                    "DATE OF BIRTH": dob
-                })
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ players: players })
             })
             .then(response => {
                 if (!response.ok) {
@@ -261,7 +261,7 @@
                 return response.json();
             })
             .then(data => {
-                document.getElementById("responseMessage").innerText = data.result === "success" ? "Registration successful!" : "Error: " + data.error;
+                document.getElementById("responseMessage").innerText = data.status === "success" ? "Registration successful!" : "Error: " + data.message;
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
