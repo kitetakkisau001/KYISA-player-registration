@@ -15,11 +15,11 @@
             100% { transform: translateY(0); }
         }
 
-        @keyframes rotateEmojis {
-            0%, 20% { content: '⚽ 🏀 🏐'; }
-            40% { content: '🏀 🏐 ⚽'; }
-            60% { content: '🏐 ⚽ 🏀'; }
-            80%, 100% { content: '⚽ 🏀 🏐'; }
+        @keyframes infinity {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(50px, -50px); }
+            50% { transform: translate(100px, 0); }
+            75% { transform: translate(50px, 50px); }
         }
 
         body {
@@ -54,10 +54,28 @@
             animation: slideIn 1s ease-in-out;
         }
 
-        #preloader .sports::before {
-            content: '⚽ 🏀 🏐';
-            display: inline-block;
-            animation: rotateEmojis 2s infinite;
+        #preloader .sports {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            width: 200px;
+            height: 100px;
+        }
+
+        #preloader .sports span {
+            position: absolute;
+            font-size: 50px;
+            animation: infinity 4s infinite;
+        }
+
+        #preloader .sports span:nth-child(2) {
+            animation-delay: 1.33s;
+        }
+
+        #preloader .sports span:nth-child(3) {
+            animation-delay: 2.66s;
         }
 
         #registrationForm {
@@ -140,7 +158,11 @@
 <body>
     <div id="preloader">
         <div class="text">KITETA KISAU SPORTS U-23 ALL STAR TEAMS REGISTRATION PORTAL</div>
-        <div class="sports"></div>
+        <div class="sports">
+            <span>⚽</span>
+            <span>🏀</span>
+            <span>🏐</span>
+        </div>
     </div>
     <h2>KYISA 2025 U-23 Player Registration</h2>
     <form id="registrationForm">
