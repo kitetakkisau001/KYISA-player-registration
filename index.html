@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KYISA 2025 U-23 Player Registration</title>
-    <link rel="icon" href="https://raw.githubusercontent.com/kitetakkisau001/KYISA-player-registration/main/kiteta%20kisau%20logo.png" type="image/png">
     <style>
         @keyframes fadeIn {
             0% { opacity: 0; }
@@ -73,10 +72,18 @@
             height: 100px;
         }
 
-        #preloader .sports img {
-            width: 100px;
-            height: auto;
+        #preloader .sports span {
+            position: absolute;
+            font-size: 50px;
             animation: infinity 4s infinite, colorChange 4s infinite;
+        }
+
+        #preloader .sports span:nth-child(2) {
+            animation-delay: 1.33s;
+        }
+
+        #preloader .sports span:nth-child(3) {
+            animation-delay: 2.66s;
         }
 
         #registrationForm {
@@ -160,7 +167,9 @@
     <div id="preloader">
         <div class="text">KITETA KISAU SPORTS U-23 ALL STAR TEAMS REGISTRATION PORTAL</div>
         <div class="sports">
-            <img src="https://raw.githubusercontent.com/kitetakkisau001/KYISA-player-registration/main/kiteta%20kisau%20logo.png" alt="Kiteta Kisau Logo">
+            <span>⚽</span>
+            <span>🏀</span>
+            <span>🏐</span>
         </div>
     </div>
     <h2>KYISA 2025 U-23 Player Registration</h2>
@@ -243,8 +252,7 @@
             fetch("https://script.google.com/macros/s/AKfycbyzH781Jcx1Vy_rguqDuj46ZQlPaaapxOpyxGNKW3qbQWsfMMigGiuEfRyFdwua4zet5A/exec", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ players: players }),
-                mode: 'cors' // Add this line to handle CORS
+                body: JSON.stringify({ players: players })
             })
             .then(response => {
                 if (!response.ok) {
