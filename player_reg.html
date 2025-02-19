@@ -1,12 +1,71 @@
+Here is the updated `player_reg.html` file with the requested changes:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Registration</title>
+    <title>KYISA 2025 Player Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eafaf1;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #registrationForm {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+            color: #2d572c;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #4b8b3b;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #bcd4b6;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4b8b3b;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3a6b2a;
+        }
+        #responseMessage {
+            text-align: center;
+            color: #d9534f;
+        }
+        #countdown {
+            text-align: center;
+            color: #d9534f;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h2>Player Registration Form</h2>
+    <h2>KYISA 2025 Player Registration</h2>
+    <div id="countdown"></div>
     <form id="registrationForm">
         <label>Name:</label>
         <input type="text" id="name" required><br><br>
@@ -59,6 +118,30 @@
                 document.getElementById("responseMessage").innerText = "Error: " + error;
             });
         });
+
+        // Countdown timer
+        var countDownDate = new Date("Feb 20, 2025 18:00:00").getTime();
+        var countdownElement = document.getElementById("countdown");
+
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            countdownElement.innerHTML = "Registration closes in " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+            if (distance < 0) {
+                clearInterval(x);
+                countdownElement.innerHTML = "Registration closed";
+            }
+        }, 1000);
     </script>
 </body>
 </html>
+```
+
+You can replace your current `player_reg.html` file with this updated version.
