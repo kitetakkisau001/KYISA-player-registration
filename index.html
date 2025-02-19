@@ -98,16 +98,16 @@
     <div id="preloader">KITETA KISAU SPORTS U-23 ALL STAR TEAMS REGISTRATION PORTAL</div>
     <h2>KYISA 2025 U-23 Player Registration</h2>
     <form id="registrationForm">
-        <label>Name:</label>
+        <label>PLAYER NAME:</label>
         <input type="text" id="name" required><br><br>
 
-        <label>Club/Team:</label>
+        <label>CLUB/TEAM:</label>
         <input type="text" id="club" required><br><br>
 
-        <label>Date of Birth:</label>
+        <label>DATE OF BIRTH:</label>
         <input type="date" id="dob" required><br><br>
 
-        <label>Category/Discipline:</label>
+        <label>CATEGORY/DISCIPLINE:</label>
         <select id="category">
             <option>Select Category/Discipline</option>
             <option value="Soccer Men">Soccer Men</option>
@@ -124,10 +124,10 @@
     <table id="playersTable">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Club/Team</th>
-                <th>Date of Birth</th>
-                <th>Category/Discipline</th>
+                <th>PLAYER NAME</th>
+                <th>CLUB/TEAM</th>
+                <th>DATE OF BIRTH</th>
+                <th>CATEGORY/DISCIPLINE</th>
             </tr>
         </thead>
         <tbody>
@@ -155,7 +155,13 @@
             var category = document.getElementById("category").value;
 
             if (name && club && dob && category) {
-                players.push({ name, club, dob, category });
+                players.push({ 
+                    "PLAYER NAME": name, 
+                    "CLUB/TEAM": club, 
+                    "DATE OF BIRTH": dob, 
+                    "CATEGORY/DISCIPLINE": category 
+                });
+
                 var table = document.getElementById("playersTable").getElementsByTagName('tbody')[0];
                 var newRow = table.insertRow();
                 newRow.innerHTML = `<td>${name}</td><td>${club}</td><td>${dob}</td><td>${category}</td>`;
