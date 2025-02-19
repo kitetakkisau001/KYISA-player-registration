@@ -107,9 +107,6 @@
         <label>Date of Birth:</label>
         <input type="date" id="dob" required><br><br>
 
-        <label>Photo of ID (Upload URL):</label>
-        <input type="url" id="id_photo" required><br><br>
-
         <label>Category/Discipline:</label>
         <select id="category">
             <option>Select Category/Discipline</option>
@@ -155,11 +152,10 @@
             var name = document.getElementById("name").value;
             var club = document.getElementById("club").value;
             var dob = document.getElementById("dob").value;
-            var id_photo = document.getElementById("id_photo").value;
             var category = document.getElementById("category").value;
 
-            if (name && club && dob && id_photo && category) {
-                players.push({ name, club, dob, id_photo, category });
+            if (name && club && dob && category) {
+                players.push({ name, club, dob, category });
                 var table = document.getElementById("playersTable").getElementsByTagName('tbody')[0];
                 var newRow = table.insertRow();
                 newRow.innerHTML = `<td>${name}</td><td>${club}</td><td>${dob}</td><td>${category}</td>`;
