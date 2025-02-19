@@ -172,7 +172,7 @@
 
             fetch("https://script.google.com/macros/s/12e9ehyRoDARRNU9w-qbTiEX6Lmglh7TELtSbxPng-YNJPEPW_QppQJI0/exec", {
                 method: "POST",
-                body: JSON.stringify(players),
+                body: JSON.stringify({ players: players }),
                 headers: { "Content-Type": "application/json" }
             })
             .then(response => response.json())
