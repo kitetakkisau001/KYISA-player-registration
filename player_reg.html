@@ -1,47 +1,64 @@
-<form id="playerForm">
-    <label for="category">Category:</label>
-    <select id="category" name="category" required>
-        <option value="Soccer Men">Soccer Men</option>
-        <option value="Soccer Ladies">Soccer Ladies</option>
-        <option value="Basketball Men">Basketball Men</option>
-        <option value="Volleyball Men">Volleyball Men</option>
-        <option value="Volleyball Ladies">Volleyball Ladies</option>
-    </select>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Registration</title>
+</head>
+<body>
+    <h2>Player Registration Form</h2>
+    <form id="registrationForm">
+        <label>Name:</label>
+        <input type="text" id="name" required><br><br>
 
-    <label for="name">Name of Player:</label>
-    <input type="text" id="name" name="name" required>
+        <label>Club:</label>
+        <input type="text" id="club" required><br><br>
 
-    <label for="club">Club:</label>
-    <input type="text" id="club" name="club" required>
+        <label>Date of Birth:</label>
+        <input type="date" id="dob" required><br><br>
 
-    <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" name="dob" required>
+        <label>Photo of ID (Upload URL):</label>
+        <input type="url" id="id_photo" required><br><br>
 
-    <label for="id_photo">Upload Photo of ID:</label>
-    <input type="file" id="id_photo" name="id_photo" accept="image/*" required>
+        <label>Category:</label>
+        <select id="category">
+            <option value="Soccer Men">Soccer Men</option>
+            <option value="Soccer Ladies">Soccer Ladies</option>
+            <option value="Basketball Men">Basketball Men</option>
+            <option value="Volleyball Men">Volleyball Men</option>
+            <option value="Volleyball Ladies">Volleyball Ladies</option>
+        </select><br><br>
 
-    <button type="submit">Submit</button>
-</form>
+        <button type="submit">Submit</button>
+    </form>
 
-<script>
-document.getElementById("playerForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+    <p id="responseMessage"></p>
 
-    var formData = new FormData(this);
-    var data = {
-        category: formData.get("category"),
-        name: formData.get("name"),
-        club: formData.get("club"),
-        dob: formData.get("dob"),
-        id_photo: "Uploaded Separately" // Image uploads require Google Drive API
-    };
+    <script>
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault();
 
-    fetch("YOUR_GOOGLE_APPS_SCRIPT_URL", {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    }).then(response => alert("Submission Successful!"))
-      .catch(error => alert("Submission Failed!"));
-});
-</script>
+            var formData = {
+                name: document.getElementById("name").value,
+                club: document.getElementById("club").value,
+                dob: document.getElementById("dob").value,
+                id_photo: document.getElementById("id_photo").value,
+                category: document.getElementById("category").value
+            };
+
+            fetch("YOUR_GOOGLE_APPS_SCRIPT_URL", {
+                method: "POST",
+                body: JSON.stringify(formData),
+                headers: { "Content-Type": "application/json" }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("responseMessage").innerText = data.status === "success" ? "Registration successful!" : "Error: " + data.message;
+            })
+            .catch(error => {
+                document.getElementById("responseMessage").innerText = "Error: " + error;
+            });
+        });
+    </script>
+</body>
+</html>
